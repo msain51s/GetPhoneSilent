@@ -7,11 +7,15 @@ import android.os.Build;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.view.animation.Animation;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -19,22 +23,33 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 public class Splash extends AppCompatActivity {
 
     private static final int PERMISSION_REQUEST_CODE = 200;
+    private TextView title;
+    private ImageView img;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        title= (TextView) findViewById(R.id.splash_title);
+        img= (ImageView) findViewById(R.id.phone_silent_img);
 
         if (!checkPermission()) {
 
             requestPermission();
 
         } else {
-
+            title.animate().translationY(200).setDuration(1000);
+            img.animate().rotation(360).setDuration(1000).setStartDelay(1000);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
 
-                    Intent intent=new Intent(Splash.this,LocationRegistration.class);
+                    Intent intent=new Intent(Splash.this,HomeScreen.class);
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        ActivityOptionsCompat options = ActivityOptionsCompat.
+                                makeSceneTransitionAnimation(Splash.this, title, "app_title");
+                        startActivity(intent, options.toBundle());
+                    }
                     startActivity(intent);
                 }
             },3000);
@@ -71,7 +86,12 @@ public class Splash extends AppCompatActivity {
                             @Override
                             public void run() {
 
-                                Intent intent=new Intent(Splash.this,LocationRegistration.class);
+                                Intent intent=new Intent(Splash.this,HomeScreen.class);
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                    ActivityOptionsCompat options = ActivityOptionsCompat.
+                                            makeSceneTransitionAnimation(Splash.this, title, "app_title");
+                                    startActivity(intent, options.toBundle());
+                                }
                                 startActivity(intent);
                             }
                         },3000);

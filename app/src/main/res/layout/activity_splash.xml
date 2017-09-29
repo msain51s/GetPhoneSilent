@@ -4,8 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/screen_blur_bg"
+    android:background="@drawable/splash_bg"
     tools:context="com.get_phone_silent.Splash">
+
+    <TextView
+        android:id="@+id/splash_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Phone Get Silent"
+        android:textStyle="italic"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:textColor="@color/white"
+        />
 
     <ImageView
         android:id="@+id/phone_silent_img"
